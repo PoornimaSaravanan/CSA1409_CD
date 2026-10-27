@@ -1,0 +1,32 @@
+
+%{
+#include <stdio.h>
+#include <string.h>
+%}
+
+%%
+
+[6-9][0-9]{9}    { printf("Valid mobile number\n"); }
+[0-9]+           { printf("Invalid mobile number\n"); }
+.                { printf("Invalid mobile number\n"); }
+
+%%
+
+int yywrap(void)
+{
+    return 1;
+}
+
+int main(void)
+{
+    char mobile[100];
+
+    printf("Enter mobile number: ");
+    scanf("%99s", mobile);
+
+    YY_BUFFER_STATE buffer = yy_scan_string(mobile);
+    yylex();
+    yy_delete_buffer(buffer);
+
+    return 0;
+}
